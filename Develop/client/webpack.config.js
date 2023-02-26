@@ -5,9 +5,6 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 
 // TODO: Add and configure workbox plugins for a service worker and manifest file.
 
-
-// TODO: Add CSS loaders and babel to webpack.
-
 module.exports = () => {
   return {
     mode: 'development',
@@ -32,15 +29,38 @@ module.exports = () => {
         icons: [
           {
             src: path.resolve('src/assets/icon.png'),
-            sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
+            sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
+            destination: path.join('assets', 'icons'),
           },
-      })
-    ],
-
+        ],
+      }),
+    	new InjectManifest({
+				swSrc: './src-sw.js',
+				swDest: 'service-worker.js',
+			}),
+		],
+    // Add CSS loaders and babel to webpack.
     module: {
       rules: [
-        
+        {
+          test: /\.css$/i,
+					use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.m?js$/,
+					exclude: /node_modules/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							presets: ['@babel/preset-env'],
+							plugins: [
+								'@babel/plugin-proposal-object-rest-spread',
+								'@babel/transform-runtime',
+              ],
+            },      
+          },
+        },
       ],
     },
   };
-};
+
