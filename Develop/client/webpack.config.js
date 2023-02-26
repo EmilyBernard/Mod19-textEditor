@@ -21,9 +21,9 @@ module.exports = () => {
         template: './index.html',
       }),
       new WebpackPwaManifest ({
-        name: 'JATE'
-        short_name: 'JATE'
-        description: 'Just Another Text Editor'
+        name: 'JATE',
+        short_name: 'JATE',
+        description: 'Just Another Text Editor',
         background_color: '#ffffff',
         crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
         icons: [
